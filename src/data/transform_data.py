@@ -14,22 +14,22 @@ import shutil
 def transform_data():   
     destino= r'C:\Users\Nicolás\github-classroom\productos-de-datos\proyecto-nicolasmosquerar\data_lake\raw'
     os.chdir('data_lake/landing/')
-    
-    for excel in glob.glob('*.xlsx'):
+    ruta=r'C:\Users\Nicolás\github-classroom\productos-de-datos\proyecto-nicolasmosquerar\data_lake\landing'
+    for excel in os.listdir(ruta):
+        if excel.endswith('.xlsx'):
+            out = excel.split('.')[0]+'.csv'
+            df=pd.read_excel(excel)
+            df.to_csv(out,index=False)
         
-        out = excel.split('.')[0]+'.csv'
-        df=pd.read_excel(excel)
-        df.to_csv(out,index=False)
+    for excel in os.listdir(ruta):
+        if excel.endswith('.xls'):
+            out = excel.split('.')[0]+'.csv'
+            df=pd.read_excel(excel)
+            df.to_csv(out,index=False)
         
-    for excel in glob.glob("*.xls"):
-        
-        out = excel.split('.')[0]+'.csv'
-        df=pd.read_excel(excel)
-        df.to_csv(out,index=False)
-        
-    for csv in glob.glob("*.csv"):
-        
-        shutil.move(f"{csv}", destino)
+    for csv in os.listdir(ruta):
+        if csv.endswith('.csv'):
+            shutil.move(f"{csv}", destino)
 
 #'data_lake/raw/{}.csv'.format(excel)
 if __name__ == "__main__":
