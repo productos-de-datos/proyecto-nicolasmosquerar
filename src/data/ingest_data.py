@@ -9,17 +9,17 @@ import argparse
 import os
 import shutil
 from datetime import datetime
-import requests 
+import wget 
 
 def ingest_data():
     os.chdir('data_lake/landing/')
     for i in range(1995,2022):
         if i in range(2016,2018):
             dir='https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true'.format(i)
-            requests.get(dir)
+            wget.download(dir)
         else:
             dir='https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(i)
-            requests.get(dir)
+            wget.download(dir)
         
         
         
