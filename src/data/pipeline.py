@@ -11,6 +11,7 @@ En luigi llame las funciones que ya creo.
 
 
 """
+import luigi
 
 if __name__ == "__main__":
 

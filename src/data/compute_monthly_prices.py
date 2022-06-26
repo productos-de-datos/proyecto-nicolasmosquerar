@@ -16,8 +16,8 @@ def compute_monthly_prices():
    
     df=pd.read_csv('data_lake/cleansed/precios-horarios.csv',index_col=None, parse_dates=['fecha'])
     media=df.groupby(pd.Grouper(freq='1M', key='fecha'))['precio'].mean().dropna()
-    print(media)
-    #media.to_csv('data_lake/business/precios-diarios.csv')
+    #print(media)
+    media.to_csv('data_lake/business/precios-mensuales.csv')
 
 
 if __name__ == "__main__":
