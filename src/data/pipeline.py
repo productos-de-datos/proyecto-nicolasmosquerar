@@ -16,7 +16,7 @@ import ingest_data
 class DataIngestion(luigi.Task):
     
     def output(self):
-        return luigi.LocalTarget('data_lake/landing/resultado.txt')
+        return luigi.LocalTarget('/resultado.txt')
     
     def run(self):
         from ingest_data import ingest_data
