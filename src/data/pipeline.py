@@ -60,7 +60,7 @@ class CalculoPreciosPromedio(luigi.Task):
             compute_daily_prices()
 class CalculoPreciosMensual(luigi.Task):
     def requires(self):
-        return CreacionTabla()
+        return CalculoPreciosPromedio()
     
     def output(self):
         return luigi.LocalTarget('data_lake/business/resultado5.txt')
@@ -70,8 +70,10 @@ class CalculoPreciosMensual(luigi.Task):
         with self.output().open('w') as monthly_prices:
             compute_monthly_prices()       
     
+if __name__ == "__main__":    
+    luigi.run(['CalculoPreciosMensual','--local-scheduler'])
+    
 if __name__ == "__main__":
     import doctest
-    luigi.build([DataIngestion(),DataTransformation(),
-                 CreacionTabla(),CalculoPreciosPromedio(),])
+    
     doctest.testmod()
