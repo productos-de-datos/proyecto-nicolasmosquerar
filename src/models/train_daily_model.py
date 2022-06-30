@@ -1,77 +1,35 @@
+from sklearn.linear_model import LinearRegression
+import pickle
+from sklearn.metrics import r2_score
 import pandas as pd
-def load_data():
-
-
-
-    in_path = 'data_lake/business/features/precios_diarios.csv'
-    data = pd.read_csv(in_path, sep=",")
-
-    return data
-
-
-def data_preparation(data):
-    import pandas as pd
-    df = data.copy()
-    df['fecha'] = pd.to_datetime(df['fecha'], format='%Y-%m-%d')
-    df['year'], df['month'], df['day'] = df['fecha'].dt.year, df['fecha'].dt.month, df['fecha'].dt.day
-
-    y = df["precio"]
-    x = df.copy()
-    x.pop("precio")
-    x.pop("fecha")
-    return x, y
-
-
-def make_train_test_split(x, y):
-
-    from sklearn.model_selection import train_test_split
-
-    (x_train, x_test, y_train, y_test) = train_test_split(
-        x,
-        y,
-        test_size=0.25,
-        random_state=12345,
-    )
-    return x_train, x_test, y_train, y_test
-
-
-def trein_model(x_train, x_test):
-    from sklearn.preprocessing import StandardScaler
-    from sklearn.ensemble import RandomForestRegressor
-
-    # Se Define el algoritmo a utilizar
-    scaler = StandardScaler()
-    scaler.fit(x_train)
-    x_train = scaler.transform(x_train)
-    x_test = scaler.transform(x_test)
-
-    # Se establece el Modelo
-    model_RF = RandomForestRegressor(n_jobs=-1)
-
-    return model_RF
-
-
-def save_model(model_RF):
-
-    import pickle
-
-    with open("src/models/precios-diarios.pickle", "wb") as file:
-        pickle.dump(model_RF, file,  pickle.HIGHEST_PROTOCOL)
-
-
+"""Realizamos el entrenamiento del modelo el cual se guardara como archivo binario
+   
+    """
 def train_daily_model():
+
+    datos = pd.read_csv( 'data_lake/business/features/precios-diarios.csv', index_col=None, header=0)
+
+    datos['fecha'] = pd.to_datetime(datos['fecha'], format='%Y-%m-%d')
     
-    data = load_data()
-    x, y = data_preparation(data)
-    x_train, x_test, y_train, y_test = make_train_test_split(x, y)
-    model_RF = trein_model(x_train, x_test)
-    save_model(model_RF)
+    datos['year'], datos['month'], datos['day'] = \
+    datos['fecha'].dt.year, datos['fecha'].dt.month, datos['fecha'].dt.day
 
-    #raise NotImplementedError("Implementar esta función")
+    x_total = datos.copy().drop('fecha', axis=1)
+    y_total = x_total.pop('precio')
 
+    x_train = x_total[:round(x_total.shape[0]*0.75)]
+    x_test = x_total[round(x_total.shape[0]*0.75):]
+    y_train = y_total[:round(x_total.shape[0]*0.75)]
+    y_test = y_total[round(x_total.shape[0]*0.75):]
+
+    regression = LinearRegression()
+    regression.fit(x_train, y_train)
+
+    r2_score(y_test,regression.predict(x_test))
+
+    pickle.dump(regression, open('src/models/precios-diarios.pkl', 'wb'))
 
 if __name__ == "__main__":
     import doctest
-
-    doctest.testmod()
     train_daily_model()
+    doctest.testmod()

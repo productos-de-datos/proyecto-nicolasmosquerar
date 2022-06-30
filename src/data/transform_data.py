@@ -1,9 +1,4 @@
-"""Transforme los archivos xls a csv.
-
-    Transforme los archivos data_lake/landing/*.xls a data_lake/raw/*.csv. Hay
-    un archivo CSV por cada archivo XLS en la capa landing. Cada archivo CSV
-    tiene como columnas la fecha en formato YYYY-MM-DD y las horas H00, ...,
-    H23.
+"""Transformamos los archivos a formato csv 
 
 """
 import pandas as pd
@@ -12,6 +7,7 @@ import os
 import shutil
 
 def transform_data():   
+    
   for file in range(1995,2022):
       
       if file in range(1995,2000):
@@ -35,11 +31,7 @@ def transform_data():
               'data_lake/landing/{}.xlsx'.format(file),header= 0)
                 read_file.to_csv(
               'data_lake/raw/{}.csv'.format(file),index=None ) 
-              
-           
-  
 
-#'data_lake/raw/{}.csv'.format(excel)
 if __name__ == "__main__":
     import doctest
     transform_data()

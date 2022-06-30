@@ -1,15 +1,4 @@
-"""Realice la limpieza y transformación de los archivos CSV.
-
-    Usando los archivos data_lake/raw/*.csv, cree el archivo data_lake/cleansed/precios-horarios.csv.
-    Las columnas de este archivo son:
-
-    * fecha: fecha en formato YYYY-MM-DD
-    * hora: hora en formato HH
-    * precio: precio de la electricidad en la bolsa nacional
-
-    Este archivo contiene toda la información del 1997 a 2021.
-
-
+"""Limpiamos la data y movemos este archivo limpio a la carpeta cleansed
     """
 import pandas as pd
 import glob
