@@ -15,9 +15,9 @@ import luigi
 from luigi import Task, LocalTarget
 
 
-class ingestar_data(Task):
+class ingestar(Task):
     def output(self):
-        return LocalTarget('data_lake/landing/arc.csv')
+        return LocalTarget('data_lake/landing/test.csv')
 
     def run(self):
 
@@ -26,12 +26,12 @@ class ingestar_data(Task):
             ingest_data()
 
 
-class transformar_data(Task):
+class transformar(Task):
     def requires(self):
-        return ingestar_data()
+        return ingestar()
 
     def output(self):
-        return LocalTarget('data_lake/raw/arc.txt')
+        return LocalTarget('data_lake/raw/test2.txt')
 
     def run(self):
 
@@ -40,12 +40,12 @@ class transformar_data(Task):
             transform_data()
 
 
-class limpiar_data(Task):
+class limpiar(Task):
     def requires(self):
-        return transformar_data()
+        return transformar()
 
     def output(self):
-        return LocalTarget('data_lake/cleansed/arc.txt')
+        return LocalTarget('data_lake/cleansed/test3.txt')
 
     def run(self):
 
@@ -56,10 +56,10 @@ class limpiar_data(Task):
 
 class computar_precio_diario(Task):
     def requires(self):
-        return limpiar_data()
+        return limpiar()
 
     def output(self):
-        return LocalTarget('data_lake/business/arc.txt')
+        return LocalTarget('data_lake/business/test4.txt')
 
     def run(self):
 
@@ -73,7 +73,7 @@ class computar_precio_mensual(Task):
         return computar_precio_diario()
 
     def output(self):
-        return LocalTarget('data_lake/business/arc.txt')
+        return LocalTarget('data_lake/business/test4.txt')
 
     def run(self):
 
