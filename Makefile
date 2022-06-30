@@ -43,5 +43,5 @@ train_model:
 	python3 src/model/train_daily_model.py
 
 make_forecasts:
-	python3 src/model/make_forecasts.py
+	python3 src/models/make_forecasts.py
 
