@@ -12,6 +12,7 @@
 
     """
 import pandas as pd
+
 def compute_monthly_prices():
    
     df=pd.read_csv('data_lake/cleansed/precios-horarios.csv',index_col=None, parse_dates=['fecha'])

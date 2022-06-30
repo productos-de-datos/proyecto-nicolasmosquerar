@@ -7,21 +7,29 @@ def make_daily_prices_plot():
     lines que representa los precios promedios diarios.
     El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/daily_prices.png.
     """
- 
 
-    precios_diarios = pd.read_csv(r'data_lake/business/precios-diarios.csv', sep=',', header=0, index_col=None)
-    precios_diarios['fecha'] = pd.to_datetime(precios_diarios["fecha"])
-    x = precios_diarios.fecha
-    y = precios_diarios.precio
-    plt.plot(x, y, 'g')
-    plt.title('Promedio de Precios Diarios')
+    path_file = r'data_lake/business/precios-diarios.csv'
+    datos = pd.read_csv(path_file, index_col=None, sep=',', header=0)
+    datos["fecha"] = pd.to_datetime(datos["fecha"])
+    x = datos.fecha
+    y = datos.precio
+
+    plt.figure(figsize=(15, 6))
+    plt.plot(x, y, 'b', label='Promedio Diario')
+    plt.title('Promedio Diario')
     plt.xlabel('Fecha')
     plt.ylabel('Precio')
-    plt.xticks(rotation='vertical')
+    plt.legend()
+    plt.xticks(rotation="vertical")
     plt.savefig("data_lake/business/reports/figures/daily_prices.png")
+
+    # return
+    #raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
+
     import doctest
-    make_daily_prices_plot()
+
     doctest.testmod()
+    make_daily_prices_plot()
