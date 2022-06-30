@@ -20,10 +20,10 @@ clean_data:
 	python3 src/data/clean_data.py
 
 compute_daily_prices:
-	python3 src/data/make_daily_prices.py
+	python3 src/data/compute_daily_prices.py
 
 compute_monthly_prices:
-	python3 src/data/make_monthly_prices.py
+	python3 src/data/compute_monthly_prices.py
 
 pipeline:
 	rm -rf data_lake
