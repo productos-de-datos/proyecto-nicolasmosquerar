@@ -23,7 +23,7 @@
 
 
 import os
-import shutil
+
 def create_data_lake():
     
     directorio = "./data_lake"
@@ -45,7 +45,13 @@ def create_data_lake():
         os.mkdir(directorio_business_forecast)
         os.makedirs(directorio_business_reports)
     else:
-        shutil.rmtree("./data_lake",ignore_errors=True)
+        os.removedirs(directorio_business_reports)
+        os.rmdir(directorio_business_features)
+        os.rmdir(directorio_business_forecast)
+        os.rmdir(directorio_landing)
+        os.rmdir(directorio_raw)
+        os.rmdir(directorio_cleansed)
+        os.rmdir(directorio_business)
         os.rmdir(directorio)
     
 
