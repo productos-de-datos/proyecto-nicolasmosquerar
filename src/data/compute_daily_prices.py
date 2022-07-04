@@ -13,7 +13,7 @@ def test_fecha():
 
     read_file = pd.read_csv(
                 'data_lake/business/precios-diarios.csv')
-    assert str(read_file['Fecha'].dtypes) == "object"
+    assert str(read_file['fecha'].dtypes) == "object"
 
 if __name__ == "__main__":
     import doctest
