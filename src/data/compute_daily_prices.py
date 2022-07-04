@@ -9,7 +9,11 @@ def compute_daily_prices():
     df=pd.read_csv('data_lake/cleansed/precios-horarios.csv',index_col=None, parse_dates=['fecha'])
     media=df.groupby(['fecha'])['precio'].mean()
     media.to_csv('data_lake/business/precios-diarios.csv')
+def test_fecha():
 
+    read_file = pd.read_csv(
+                'data_lake/business/precios-diarios.csv')
+    assert str(read_file['Fecha'].dtypes) == "object"
 
 if __name__ == "__main__":
     import doctest
